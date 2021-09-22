@@ -1,17 +1,22 @@
 package com.model;
 
 public class Result {
+	private int resultId;
 	private int studId;
 	private int test1;
 	private int test2;
 	private int test3;
 	private int totalMarks;
-	private int percent;
+	private float percent;
 	
-	
-	
-	public Result(int studId, int test1, int test2, int test3, int totalMarks, int percent) 
+	public Result()
 	{
+		
+	}
+	
+	public Result(int resultId,int studId, int test1, int test2, int test3, int totalMarks, float percent) 
+	{
+		this.resultId=resultId;
 		this.studId = studId;
 		this.test1 = test1;
 		this.test2 = test2;
@@ -31,10 +36,10 @@ public class Result {
 	public void setTotalMarks(int totalMarks) {
 		this.totalMarks = totalMarks;
 	}
-	public int getPercent() {
+	public float getPercent() {
 		return percent;
 	}
-	public void setPercent(int percent) {
+	public void setPercent(float percent) {
 		this.percent = percent;
 	}
 	
@@ -55,6 +60,14 @@ public class Result {
 	}
 	public void setTest3(int test3) {
 		this.test3 = test3;
+	}
+	
+	
+	public int getResultId() {
+		return resultId;
+	}
+	public void setResultId(int resultId) {
+		this.resultId = resultId;
 	}
 	@Override
 	public String toString() {

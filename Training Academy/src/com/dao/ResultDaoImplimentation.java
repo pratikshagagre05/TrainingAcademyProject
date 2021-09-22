@@ -34,13 +34,14 @@ public class ResultDaoImplimentation implements ResultDao
 			try
 			{
 				connection = ConnectionFactory.getConnection();
-				preparedStatement=connection.prepareStatement("insert into result values(?,?,?,?,?,?)");
-				preparedStatement.setInt(1, result.getStudId());
-				preparedStatement.setInt(2, result.getTest1());
-				preparedStatement.setInt(3, result.getTest2());
-				preparedStatement.setInt(4, result.getTest3());
-				preparedStatement.setInt(5, result.getTotalMarks());
-				preparedStatement.setInt(6, result.getPercent());
+				preparedStatement=connection.prepareStatement("insert into result values(?,?,?,?,?,?,?)");
+				preparedStatement.setInt(1, result.getResultId());
+				preparedStatement.setInt(2, result.getStudId());
+				preparedStatement.setInt(3, result.getTest1());
+				preparedStatement.setInt(4, result.getTest2());
+				preparedStatement.setInt(5, result.getTest3());
+				preparedStatement.setInt(6, result.getTotalMarks());
+				preparedStatement.setFloat(7, result.getPercent());
 			
 				
 				status=preparedStatement.executeUpdate();
@@ -69,8 +70,102 @@ public class ResultDaoImplimentation implements ResultDao
 					e.printStackTrace();
 				}
 			}
-			return status;
+		return status;
 		}
+		}
+		
+		public int removeResult(int resultId) {
+			// TODO Auto-generated method stub
+			//Connection connection=null;
+			//PreparedStatement preparedStatement =null;
+			ResultSet resultSet = null;
+			int r=0;
+
+			try
+			{
+				connection = ConnectionFactory.getConnection();
+				preparedStatement=connection.prepareStatement("delete from result where resultId=?");
+				preparedStatement.setInt(1,resultId);
+				r=preparedStatement.executeUpdate();
+				System.out.println("Number of rows deleted : "+r);
+			}catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			finally 
+			{
+				try {
+					if (resultSet != null)
+						resultSet.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				try {
+					if (preparedStatement != null)
+						preparedStatement.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				try {
+					if (connection != null)
+						connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			return r;
+		
 	}
+
+		@Override
+			public int updateResult(int resultId,int test1,int test2,int test3,int totalMarks,float percent) {
+				// TODO Auto-generated method stub
+				
+				int r=0;
+				try
+				{
+					connection = ConnectionFactory.getConnection();
+					preparedStatement=connection.prepareStatement("update result set test1=?,test2=?,test3=?,totalMarks=?,percent=? where resultId=?");
+					preparedStatement.setInt(1, resultId);
+					preparedStatement.setInt(2, test1);
+					preparedStatement.setInt(3, test2);
+					preparedStatement.setInt(4, test3);
+					preparedStatement.setInt(5, totalMarks);
+					preparedStatement.setFloat(6, percent);
+					
+					r=preparedStatement.executeUpdate();
+					System.out.println("Number of rows updated successfully : "+r);
+				}
+				catch(SQLException e)
+				{
+					e.printStackTrace();
+				}
+				finally {
+					try {
+						if (resultSet != null)
+							resultSet.close();
+					} catch (SQLException e) {
+						
+						e.printStackTrace();
+					}
+					try {
+						if (preparedStatement != null)
+							preparedStatement.close();
+					} catch (SQLException e) {
+												e.printStackTrace();
+					}
+					try {
+						if (connection != null)
+							connection.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+				return r;
+			}
 
 }

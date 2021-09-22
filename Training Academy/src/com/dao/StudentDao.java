@@ -9,5 +9,7 @@ public interface StudentDao
 	int addStudent(Student student);
 	int removeStudent(int studId);
 	int updateRecord(int studId,String studName,long mobNo);
-
+	void meritListTopFiveStudent(int batchid);
+	void topFiveStudentFromAllBatches();
+	void topBatchAndTrainerr();
 }

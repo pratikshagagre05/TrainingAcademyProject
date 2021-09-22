@@ -23,12 +23,9 @@ public class StudentDaoImplimentation implements StudentDao
 
 
 	@Override
-	public List<Student> getAllStudents() {
-		// TODO Auto-generated method stub
-		/*
-		 * ArrayList<Student> studentList = new ArrayList<>(); Connection connection =
-		 * null; PreparedStatement preparedStatement = null; ResultSet resultSet = null;
-		 */			final String QUERY = "select * from student";
+	public List<Student> getAllStudents()
+	{
+		final String QUERY = "select * from student";
 			try {
 				connection = ConnectionFactory.getConnection();
 				preparedStatement = connection.prepareStatement(QUERY);
@@ -46,29 +43,36 @@ public class StudentDaoImplimentation implements StudentDao
 
 				}
 
-			} catch (Exception e) {
-				// TODO: handle exception
-				e.printStackTrace();
-			} finally {
-				try {
+			} catch (Exception e) 
+			{
+					e.printStackTrace();
+			}
+			finally
+			{
+				try 
+				{
 					if (resultSet != null)
 						resultSet.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
+				} 
+				catch (SQLException e) 
+				{
 					e.printStackTrace();
 				}
-				try {
+				try 
+				{
 					if (preparedStatement != null)
 						preparedStatement.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
+				} 
+				catch (SQLException e) 
+				{
 					e.printStackTrace();
 				}
-				try {
+				try
+				{
 					if (connection != null)
 						connection.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
+				} catch (SQLException e)
+				{
 					e.printStackTrace();
 				}
 			}
@@ -79,7 +83,6 @@ public class StudentDaoImplimentation implements StudentDao
 	@Override
 	public int addStudent(Student student)
 	{
-		// TODO Auto-generated method stub
 		System.out.println(student);
 		int status=0;
 		Connection connection=null;
@@ -124,13 +127,9 @@ public class StudentDaoImplimentation implements StudentDao
 	}
 
 	
-	public int removeStudent(int studId) {
-		// TODO Auto-generated method stub
-		//Connection connection=null;
-		//PreparedStatement preparedStatement =null;
-		ResultSet resultSet = null;
+	public int removeStudent(int studId) 
+	{
 		int r=0;
-
 		try
 		{
 			connection = ConnectionFactory.getConnection();
@@ -143,25 +142,21 @@ public class StudentDaoImplimentation implements StudentDao
 			e.printStackTrace();
 		}
 		finally {
-			try {
-				if (resultSet != null)
-					resultSet.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			try {
+			
+			try 
+			{
 				if (preparedStatement != null)
 					preparedStatement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+			} 
+			catch (SQLException e)
+			{
 				e.printStackTrace();
 			}
-			try {
+			try
+			{
 				if (connection != null)
 					connection.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -170,20 +165,77 @@ public class StudentDaoImplimentation implements StudentDao
 	}
 
 	@Override
-	public int updateRecord(int studId,String studName,long mobNo) {
-		// TODO Auto-generated method stub
-		
+	public int updateRecord(int studId,String studName,long mobNo) 
+	{
 		int r=0;
 		try
 		{
 			connection = ConnectionFactory.getConnection();
 			preparedStatement=connection.prepareStatement("update student set studName=?,mobNo=? where studId=?");
-			preparedStatement.setInt(1, studId);
-			preparedStatement.setString(2, studName);
-			preparedStatement.setLong(3, mobNo);
+			
+			preparedStatement.setString(1, studName);
+			preparedStatement.setLong(2, mobNo);
+			preparedStatement.setInt(3, studId);
 			
 			r=preparedStatement.executeUpdate();
-			System.out.println("Number of rows updated successfully : "+r);
+			
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} catch (SQLException e) 
+			{
+				e.printStackTrace();
+			}
+			try {
+				if (connection != null)
+					connection.close();
+			} 
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return r;
+	}
+	
+	public void meritListTopFiveStudent(int batchid) {
+
+		
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+		ResultSet resultSet=null;
+	
+		String 	query="select s.studId,s.studName,r.percent from student s inner join result r on s.studId=r.studid where batchid=? and percent>50 order by percent desc limit 2";
+		try
+		{
+			connection = ConnectionFactory.getConnection();
+			preparedStatement=connection.prepareStatement(query);
+		
+			preparedStatement.setInt(1, batchid);
+			System.out.println("Student Id   Student Name   percent");
+			
+			resultSet=preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				System.out.print(resultSet.getInt("studId"));
+				System.out.print("            ");
+				System.out.print(resultSet.getString("studName"));
+				System.out.print("       ");
+				System.out.print(resultSet.getFloat("percent"));
+				System.out.println();
+				/*
+				 * System.out.println(resultSet.getInt("studId")); System.out.print("     ");
+				 * System.out.print(resultSet.getString("studName")); System.out.print("    ");
+				 * System.out.print(resultSet.getFloat("percent"));
+				 */
+			}
+			
+			
+			
 		}
 		catch(SQLException e)
 		{
@@ -193,27 +245,152 @@ public class StudentDaoImplimentation implements StudentDao
 			try {
 				if (resultSet != null)
 					resultSet.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+			} catch (SQLException e) 
+			{
 				e.printStackTrace();
 			}
+		
 			try {
 				if (preparedStatement != null)
 					preparedStatement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+			} catch (SQLException e) 
+			{
 				e.printStackTrace();
 			}
 			try {
 				if (connection != null)
 					connection.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+			} 
+			catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
-		return r;
+		
 	}
+
+	public void topFiveStudentFromAllBatches() {
+		// TODO Auto-generated method stub
+				Connection connection=null;
+				PreparedStatement preparedStatement=null;
+				ResultSet resultSet=null;
+			
+				String 	query="\r\n"
+						+ "select s.studId,s.studName,r.percent,b.batch_name from student s inner join result r on s.studId = r.studId inner join batches b on  b.Batch_id=s.batchid where percent>50 order by percent desc limit 10;";
+				try
+				{
+					connection = ConnectionFactory.getConnection();
+					preparedStatement=connection.prepareStatement(query);
+				
+					//preparedStatement.setInt(1, batchid);
+					System.out.println("Student Id       Student Name     percent  Batch Name");
+					
+					resultSet=preparedStatement.executeQuery();
+					while (resultSet.next()) {
+						System.out.print(resultSet.getInt("studId"));
+						System.out.print("               ");
+						System.out.print(resultSet.getString("studName"));
+						System.out.print("        ");	
+						System.out.print(resultSet.getFloat("percent"));
+						System.out.print("       ");
+						System.out.print(resultSet.getString("batch_name"));
+						System.out.println();
+						
+					}
+								
+				}
+				catch(SQLException e)
+				{
+					e.printStackTrace();
+				}
+				finally {
+					try {
+						if (resultSet != null)
+							resultSet.close();
+					} catch (SQLException e) 
+					{
+						e.printStackTrace();
+					}
+				
+					try {
+						if (preparedStatement != null)
+							preparedStatement.close();
+					} catch (SQLException e) 
+					{
+						e.printStackTrace();
+					}
+					try {
+						if (connection != null)
+							connection.close();
+					} 
+					catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+				
+			}
+				
+	public void topBatchAndTrainerr()
+	{
+			Connection connection=null;
+			PreparedStatement preparedStatement=null;
+			ResultSet resultSet=null;
+			String 	query="select b.batch_id,b.batch_name, t.Trainer_name, avg(r.percent) as average\r\n"
+					+ "from student s join trainer t join batches b join result r on s.batchid=b.batch_id \r\n"
+					+ "and s.studId=r.studid and b.Batch_id=t.Batch_id group by b.batch_id,t.trainer_name order by average desc limit 1;";
+			try
+			{
+				connection = ConnectionFactory.getConnection();
+				preparedStatement=connection.prepareStatement(query);
+							
+				resultSet=preparedStatement.executeQuery();
+				while (resultSet.next()) {
+					System.out.print(resultSet.getInt("batch_id"));
+					System.out.print("            ");
+					System.out.print(resultSet.getString("batch_name"));
+					System.out.print("       ");
+					System.out.print(resultSet.getString("Trainer_name"));
+					System.out.println();
+					
+				}					
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			finally {
+				try {
+					if (resultSet != null)
+						resultSet.close();
+				} catch (SQLException e) 
+				{
+					e.printStackTrace();
+				}
+			
+				try {
+					if (preparedStatement != null)
+						preparedStatement.close();
+				} catch (SQLException e) 
+				{
+					e.printStackTrace();
+				}
+				try {
+					if (connection != null)
+						connection.close();
+				} 
+				catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+	}
+	
+	
+	
+	
+	
+	
+	
 }
+	
+
 	
 

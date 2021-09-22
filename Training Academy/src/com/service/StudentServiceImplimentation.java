@@ -44,5 +44,24 @@ public class StudentServiceImplimentation implements StudentService
 		// TODO Auto-generated method stub
 		return studentDao.updateRecord( studId,studName,mobNo);
 	}
+	@Override
+	public void meritListTopFiveStudent(int batchid) {
+		// TODO Auto-generated method stub
+		studentDao.meritListTopFiveStudent(batchid);
+		
+	}
+	@Override
+	public void topFiveStudentFromAllBatches() {
+		// TODO Auto-generated method stub
+		studentDao.topFiveStudentFromAllBatches();
+		
+	}
+	@Override
+	public void topBatchAndTrainerr() {
+		// TODO Auto-generated method stub
+		studentDao.topBatchAndTrainerr();
+		
+	}
+	
 	
 }
