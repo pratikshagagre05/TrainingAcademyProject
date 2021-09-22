@@ -11,5 +11,6 @@ public interface StudentService
 	void meritListTopFiveStudent(int batchid);
 	void topFiveStudentFromAllBatches();
 	void topBatchAndTrainerr();
+	void worstBatch();
 
 }

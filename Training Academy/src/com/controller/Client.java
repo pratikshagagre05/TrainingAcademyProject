@@ -33,7 +33,8 @@ public class Client {
 			Scanner sc = new Scanner(System.in);
 			System.out.println("1.Student Details" + "\t\t" + "2.Add Students" + "\n" + "3.Delete Record" + "\t\t"
 					+ "4.Update Student Record." + "\n5.Add Result" + "\t\t" + "6.Dlete Result"
-					+ "\n7.Update Student Marks" + "\t\t8.Tooppers"+"\n9.Toppers from all Batches"+"\t\t10.Best batch and");
+					+ "\n7.Update Student Marks" + "\t\t8.Tooppers"+"\n9.Toppers from all Batches"+"\t\t10.Best batch and trainer"+"\n11."
+							+ "Worst batch ");
 			System.out.println("\nEnter Choice:");
 			int choice = sc.nextInt();
 			// StudentDaoImplimentation studentDaoImplimentation=new
@@ -176,7 +177,17 @@ public class Client {
 				
 			case 9: 
 				studentService.topFiveStudentFromAllBatches();
-			    break;	
+			    break;
+			    
+			case 10:
+				System.out.println("The Best Batch And Trainer");
+				studentService.topBatchAndTrainerr();
+				break;
+				
+			case 11:
+				System.out.println("Worst Batch");
+				studentService.worstBatch();
+			
 			}
 
 			System.out.println();

@@ -12,4 +12,5 @@ public interface StudentDao
 	void meritListTopFiveStudent(int batchid);
 	void topFiveStudentFromAllBatches();
 	void topBatchAndTrainerr();
+	void worstBatch();
 }

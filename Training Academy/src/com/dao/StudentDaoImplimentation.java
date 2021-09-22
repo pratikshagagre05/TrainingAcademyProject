@@ -382,6 +382,67 @@ public class StudentDaoImplimentation implements StudentDao
 				}
 			}
 	}
+
+	@Override
+	public void worstBatch() {
+		// TODO Auto-generated method stub
+		
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+		ResultSet resultSet=null;
+	
+		String 	query="select b.batch_id ,b.batch_name from\r\n"
+				+ "student s join batches b join result r on\r\n"
+				+ "s.batchid = b.batch_id and r.studid=s.studid and r.percent<50 "
+				+ "group by  b.Batch_id order by count(s.studid) desc limit 1; ";
+		try
+		{
+			connection = ConnectionFactory.getConnection();
+			preparedStatement=connection.prepareStatement(query);
+					
+			resultSet=preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				System.out.print(resultSet.getInt("batch_id"));
+				System.out.print("            ");
+				System.out.print(resultSet.getString("batch_name"));
+				System.out.print("       ");
+				System.out.println();
+			
+			}
+			
+			
+			
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (SQLException e) 
+			{
+				e.printStackTrace();
+			}
+		
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} catch (SQLException e) 
+			{
+				e.printStackTrace();
+			}
+			try {
+				if (connection != null)
+					connection.close();
+			} 
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
 	
 	
 	

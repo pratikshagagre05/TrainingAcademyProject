@@ -62,6 +62,12 @@ public class StudentServiceImplimentation implements StudentService
 		studentDao.topBatchAndTrainerr();
 		
 	}
+	@Override
+	public void worstBatch() {
+		// TODO Auto-generated method stub
+		studentDao.worstBatch();
+		
+	}
 	
 	
 }
