@@ -210,7 +210,8 @@ public class StudentDaoImplimentation implements StudentDao
 		PreparedStatement preparedStatement=null;
 		ResultSet resultSet=null;
 	
-		String 	query="select s.studId,s.studName,r.percent from student s inner join result r on s.studId=r.studid where batchid=? and percent>50 order by percent desc limit 2";
+		String 	query="select s.studId,s.studName,r.percent from student s inner join result r "
+				+ "on s.studId=r.studid where batchid=? and percent>50 order by percent desc limit 5";
 		try
 		{
 			connection = ConnectionFactory.getConnection();
@@ -227,11 +228,7 @@ public class StudentDaoImplimentation implements StudentDao
 				System.out.print("       ");
 				System.out.print(resultSet.getFloat("percent"));
 				System.out.println();
-				/*
-				 * System.out.println(resultSet.getInt("studId")); System.out.print("     ");
-				 * System.out.print(resultSet.getString("studName")); System.out.print("    ");
-				 * System.out.print(resultSet.getFloat("percent"));
-				 */
+				
 			}
 			
 			
@@ -275,7 +272,9 @@ public class StudentDaoImplimentation implements StudentDao
 				ResultSet resultSet=null;
 			
 				String 	query="\r\n"
-						+ "select s.studId,s.studName,r.percent,b.batch_name from student s inner join result r on s.studId = r.studId inner join batches b on  b.Batch_id=s.batchid where percent>50 order by percent desc limit 10;";
+						+ "select s.studId,s.studName,r.percent,b.batch_name from student s inner join result r "
+						+ "on s.studId = r.studId inner join batches b on  b.Batch_id=s.batchid where percent>50"
+						+ " order by percent desc limit 10;";
 				try
 				{
 					connection = ConnectionFactory.getConnection();
@@ -336,7 +335,8 @@ public class StudentDaoImplimentation implements StudentDao
 			ResultSet resultSet=null;
 			String 	query="select b.batch_id,b.batch_name, t.Trainer_name, avg(r.percent) as average\r\n"
 					+ "from student s join trainer t join batches b join result r on s.batchid=b.batch_id \r\n"
-					+ "and s.studId=r.studid and b.Batch_id=t.Batch_id group by b.batch_id,t.trainer_name order by average desc limit 1;";
+					+ "and s.studId=r.studid and b.Batch_id=t.Batch_id group by b.batch_id,t.trainer_name "
+					+ "order by average desc limit 1;";
 			try
 			{
 				connection = ConnectionFactory.getConnection();
@@ -345,9 +345,9 @@ public class StudentDaoImplimentation implements StudentDao
 				resultSet=preparedStatement.executeQuery();
 				while (resultSet.next()) {
 					System.out.print(resultSet.getInt("batch_id"));
-					System.out.print("            ");
+					System.out.print("      ");
 					System.out.print(resultSet.getString("batch_name"));
-					System.out.print("       ");
+					System.out.print("      ");
 					System.out.print(resultSet.getString("Trainer_name"));
 					System.out.println();
 					
@@ -403,9 +403,9 @@ public class StudentDaoImplimentation implements StudentDao
 			resultSet=preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				System.out.print(resultSet.getInt("batch_id"));
-				System.out.print("            ");
+				System.out.print("  -   ");
 				System.out.print(resultSet.getString("batch_name"));
-				System.out.print("       ");
+				System.out.print("     ");
 				System.out.println();
 			
 			}

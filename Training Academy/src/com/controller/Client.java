@@ -1,25 +1,21 @@
 
 package com.controller;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+//import java.sql.Connection;
+//import java.sql.PreparedStatement;
+//import java.sql.ResultSet;
+//import java.sql.SQLException;
+//import java.sql.Statement;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
-
-import com.configuration.ConnectionFactory;
+//import com.configuration.ConnectionFactory;
 //import com.dao.StudentDaoImplimentation;
-import com.dao.*;
+//import com.dao.*;
 import com.model.*;
 //import com.model.Result;
 //import com.model.Student;
 import com.service.*;
-//import com.service.StudentService;
-//import com.service.StudentServiceImplimentation;
 
 public class Client {
 
@@ -28,27 +24,22 @@ public class Client {
 		String str;
 		StudentService studentService = new StudentServiceImplimentation();
 		ResultService resultService = new ResultServiceImplimentation();
+		System.out.println();
+		System.out.println("***************** TQ Training Academy *****************");
 
 		do {
 			Scanner sc = new Scanner(System.in);
-			System.out.println("1.Student Details" + "\t\t" + "2.Add Students" + "\n" + "3.Delete Record" + "\t\t"
-					+ "4.Update Student Record." + "\n5.Add Result" + "\t\t" + "6.Dlete Result"
-					+ "\n7.Update Student Marks" + "\t\t8.Tooppers"+"\n9.Toppers from all Batches"+"\t\t10.Best batch and trainer"+"\n11."
+			System.out.println("\t1.Student Details" + "\t\t" + "2.Add Students" + "\n\t" + "3.Delete Record" + "\t\t"
+					+ "\t4.Update Student Record." + "\n\t5.Add Result" + "\t\t" + "\t6.Dlete Result"
+					+ "\n\t7.Update Student Marks" + "\t\t8.Tooppers"+"\n\t9.Toppers from all Batches"+"\t10.Best batch and trainer"+"\n\t11."
 							+ "Worst batch ");
 			System.out.println("\nEnter Choice:");
 			int choice = sc.nextInt();
-			// StudentDaoImplimentation studentDaoImplimentation=new
-			// StudentDaoImplimentation();
-			// StudentService studentService= new
-			// StudentServiceImplimentation(studentDaoImplimentation);
-			// StudentService studentService= new StudentServiceImplimentation();
-			// ResultService resultService=new ResultServiceImplimentation();
-
 			List<Student> studentList = studentService.getAllStudents();
 			Iterator<Student> itr = studentList.iterator();
 			switch (choice) {
 			case 1:
-				System.out.println("**********All Student Datails*************");
+				System.out.println("************* All Student Datails *************"); 
 
 				while (itr.hasNext()) {
 					Student student = (Student) itr.next();
@@ -64,7 +55,7 @@ public class Client {
 				break;
 			case 2:
 				System.out.println(" ");
-				System.out.println("******* Enter Student information ************");
+				System.out.println("************* Enter Student information ************");
 				System.out.println("Enter Student Id:- ");
 				int studId = sc.nextInt();
 				System.out.println("Enter Student Name:- ");
@@ -105,20 +96,20 @@ public class Client {
 			case 4:
 				System.out.println("Enter record number to update :");
 				int studid1 = sc.nextInt();
-				System.out.println("Enter student updated name  :");
+				System.out.println("Enter student name to update  :"); 
 				String studname1 = sc.next();
-				System.out.println("Enter students updated mobile no  :");
+				System.out.println("Enter students  mobile no to update :");
 				long mobno1 = sc.nextLong();
 				int status = studentService.updateRecord(studid1, studname1, mobno1);
 				if (status > 0) {
-					System.out.println("Student updated successfully : ");
+					System.out.println("Student updated successfully ......");
 				} else
-					System.out.println("Unable to update");
+					System.out.println("Unable to update......");
 				break;
 
 			case 5:
 				System.out.println(" ");
-				System.out.println("******* Enter Student Marks ************");
+				System.out.println("************* Enter Student Marks ************");
 
 				System.out.println("Enter Result Id:- ");
 				int resultId = sc.nextInt();
@@ -150,10 +141,11 @@ public class Client {
 
 			case 6:
 
-				System.out.println("Enter record number to delete :");
+				System.out.println("Enter result id to delete :");
 				int resultd = sc.nextInt();
 				resultService.removeResult(resultd);
 				break;
+				
 			case 7:
 				System.out.println("Enter result id to update marks :");
 				int resultId1 = sc.nextInt();
@@ -166,7 +158,16 @@ public class Client {
 				int totalMarks1 = test11 + test22 + test33;
 				float percent1 = ((totalMarks1 * 100) / 150);
 
-				resultService.updateResult(resultId1, test11, test22, test33, totalMarks1, percent1);
+				int status1=resultService.updateResult(resultId1, test11, test22, test33, totalMarks1, percent1);
+				if(status1>0)
+				{
+					System.out.println("Result updated successfully.....");
+					
+				}
+				else
+				{
+					System.out.println("Result not updated.....");
+				}
 				break;
 
 			case 8:
@@ -180,12 +181,14 @@ public class Client {
 			    break;
 			    
 			case 10:
-				System.out.println("The Best Batch And Trainer");
+				System.out.println("The Best Batch And Trainer.......");
+				System.out.println();
 				studentService.topBatchAndTrainerr();
 				break;
 				
 			case 11:
-				System.out.println("Worst Batch");
+				System.out.println("Worst Batch........");
+				System.out.println();
 				studentService.worstBatch();
 			
 			}

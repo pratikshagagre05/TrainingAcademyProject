@@ -75,10 +75,7 @@ public class ResultDaoImplimentation implements ResultDao
 		}
 		
 		public int removeResult(int resultId) {
-			// TODO Auto-generated method stub
-			//Connection connection=null;
-			//PreparedStatement preparedStatement =null;
-			ResultSet resultSet = null;
+						ResultSet resultSet = null;
 			int r=0;
 
 			try
@@ -98,21 +95,20 @@ public class ResultDaoImplimentation implements ResultDao
 					if (resultSet != null)
 						resultSet.close();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 				try {
 					if (preparedStatement != null)
 						preparedStatement.close();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				try {
 					if (connection != null)
 						connection.close();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 			}
@@ -123,22 +119,20 @@ public class ResultDaoImplimentation implements ResultDao
 
 		@Override
 			public int updateResult(int resultId,int test1,int test2,int test3,int totalMarks,float percent) {
-				// TODO Auto-generated method stub
 				
 				int r=0;
 				try
 				{
 					connection = ConnectionFactory.getConnection();
 					preparedStatement=connection.prepareStatement("update result set test1=?,test2=?,test3=?,totalMarks=?,percent=? where resultId=?");
-					preparedStatement.setInt(1, resultId);
-					preparedStatement.setInt(2, test1);
-					preparedStatement.setInt(3, test2);
-					preparedStatement.setInt(4, test3);
-					preparedStatement.setInt(5, totalMarks);
-					preparedStatement.setFloat(6, percent);
+					preparedStatement.setInt(1, test1);
+					preparedStatement.setInt(2, test2);
+					preparedStatement.setInt(3, test3);
+					preparedStatement.setInt(4, totalMarks);
+					preparedStatement.setFloat(5, percent);
+					preparedStatement.setInt(6, resultId);
 					
 					r=preparedStatement.executeUpdate();
-					System.out.println("Number of rows updated successfully : "+r);
 				}
 				catch(SQLException e)
 				{
